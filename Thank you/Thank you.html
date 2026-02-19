@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Expert Edge</title>
+    <style>
+        /* --- 1. CORE VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0f172a; /* Deep Navy */
+            --text-color: #ffffff;
+            --primary-accent: #3b82f6; /* Electric Blue */
+            --secondary-accent: #8b5cf6; /* Vivid Purple */
+            --fun-accent: #f59e0b; /* Whimsical Orange */
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* --- 2. ACCESSIBILITY CONTROLS --- */
+        .a11y-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .motion-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s;
+        }
+
+        .motion-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- 3. BACKGROUND ANIMATIONS --- */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 1;
+            opacity: 0.6;
+            animation: floatShape 10s infinite alternate ease-in-out;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary-accent);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--secondary-accent);
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        /* --- 4. MAIN CONTENT CONTAINER --- */
+        .container {
+            z-index: 10;
+            text-align: center;
+            padding: 3rem 2rem; /* Increased padding for breathing room */
+            max-width: 800px;
+            width: 90%;
+            
+            /* Glassmorphism effect */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Ensures logo is perfectly centered */
+            
+            transform: translateY(20px);
+            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        /* --- 5. LOGO STYLES (NEW) --- */
+        .logo-container {
+            margin-bottom: 2rem;
+            /* Subtle floating animation for the logo */
+            animation: floatLogo 6s ease-in-out infinite;
+        }
+
+        .logo-img {
+            display: block;
+            max-width: 180px; /* Adjust this size to fit your specific logo */
+            height: auto;
+            /* Adds a cool glow behind the logo matching brand colors */
+            filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.6)); 
+        }
+
+        /* --- 6. TEXT STYLES --- */
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            
+            background: linear-gradient(
+                90deg, 
+                var(--primary-accent), 
+                #ffffff, 
+                var(--fun-accent), 
+                var(--secondary-accent)
+            );
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 5s linear infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* --- 7. BUTTON --- */
+        .cta-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: var(--primary-accent);
+            color: white;
+            font-weight: 700;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05) translateY(-3px);
+            background: var(--secondary-accent);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6);
+        }
+
+        /* --- 8. CONFETTI CANVAS --- */
+        #confetti-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* --- 9. ANIMATIONS --- */
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        @keyframes floatShape {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(30px, 50px) rotate(10deg); }
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* --- 10. REDUCED MOTION --- */
+        @media (prefers-reduced-motion: reduce) {
+            .bg-shape, .logo-container, h1 { animation: none; }
+        }
+        body.reduce-motion .bg-shape { animation: none; }
+        body.reduce-motion h1 { animation: none; }
+        body.reduce-motion .logo-container { animation: none; }
+    </style>
+</head>
+<body>
+
+    <div class="a11y-controls">
+        <button id="motionToggle" class="motion-toggle">⏸ Pause Animations</button>
+    </div>
+
+    <!-- Background Blobs -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Content Card -->
+    <main class="container">
+        
+        <!-- LOGO SECTION -->
+        <div class="logo-container">
+            <!-- 
+               REPLACE THE SRC BELOW WITH YOUR LOGO FILE (e.g., "images/expert-edge-logo.png") 
+               Currently using a placeholder image service.
+            -->
+            <img src="https://image2url.com/r2/default/images/1771483423401-2c877089-f91b-4a52-8898-dc36edf7b192.png" 
+                 alt="Expert Edge Logo" 
+                 class="logo-img">
+        </div>
+
+        <h1>Thank You for Visiting!</h1>
+        <p>We're thrilled you stopped by. Your journey to excellence starts here, and we can't wait to see what you achieve next.</p>
+        
+        <button class="cta-btn" onclick="triggerConfetti()">Bravo!</button>
+    </main>
+
+    <script>
+        // --- Confetti Logic ---
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId;
+        let isMotionReduced = false;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 10 + 5;
+                this.speedY = Math.random() * 3 + 2;
+                this.speedX = Math.random() * 4 - 2;
+                this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 10 - 5;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.rotation += this.rotationSpeed;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.restore();
+            }
+        }
+
+        function animateConfetti() {
+            if (isMotionReduced) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (particles.length < 150 && Math.random() < 0.1) {
+                particles.push(new Particle());
+            }
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].y > canvas.height) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            animationId = requestAnimationFrame(animateConfetti);
+        }
+
+        window.triggerConfetti = function() {
+            if (isMotionReduced) return;
+            for(let i=0; i<50; i++) particles.push(new Particle());
+        };
+
+        const motionBtn = document.getElementById('motionToggle');
+        motionBtn.addEventListener('click', () => {
+            isMotionReduced = !isMotionReduced;
+            document.body.classList.toggle('reduce-motion');
+            if (isMotionReduced) {
+                cancelAnimationFrame(animationId);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles = [];
+                motionBtn.innerText = "▶ Play Animations";
+            } else {
+                animateConfetti();
+                motionBtn.innerText = "⏸ Pause Animations";
+            }
+        });
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            isMotionReduced = true;
+            document.body.classList.add('reduce-motion');
+            motionBtn.innerText = "▶ Play Animations";
+        } else {
+            animateConfetti();
+        }
+    </script>
+</body>
+</html>
